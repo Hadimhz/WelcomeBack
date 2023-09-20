@@ -43,7 +43,7 @@ public class Command implements CommandExecutor {
             return false;
         }
 
-        if (!player.hasPlayedBefore())
+        if (!listener.getPlayer().hasPlayedBefore())
             player.chat(config.firstJoin.replaceAll("%player%", listener.getPlayer().getName()));
         else player.chat(config.joinBack.replaceAll("%player%", listener.getPlayer().getName()));
 
