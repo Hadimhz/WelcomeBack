@@ -1,0 +1,7 @@
+name: WelcomeBack
+main: dev.hadimhz.welcome.WelcomePlugin
+version: 1.0
+
+commands:
+  welcome:
+    aliases: [ wb ]
