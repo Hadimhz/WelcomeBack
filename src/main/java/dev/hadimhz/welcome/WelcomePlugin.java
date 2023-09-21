@@ -22,7 +22,7 @@ public class WelcomePlugin extends JavaPlugin {
 
         final PlayerListener playerListener = new PlayerListener(this, config);
 
-        Objects.requireNonNull(getCommand("welcome")).setExecutor(new Command(playerListener, config));
+        Objects.requireNonNull(getCommand("welcome")).setExecutor(new Command(this, playerListener, config));
 
     }
 }

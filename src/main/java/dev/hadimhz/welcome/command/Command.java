@@ -7,14 +7,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 public class Command implements CommandExecutor {
 
+    private final Plugin plugin;
     private final PlayerListener listener;
     private final Config config;
 
-    public Command(PlayerListener listener, Config config) {
+    public Command(Plugin plugin, PlayerListener listener, Config config) {
+        this.plugin = plugin;
         this.listener = listener;
         this.config = config;
     }
@@ -43,9 +46,11 @@ public class Command implements CommandExecutor {
             return false;
         }
 
-        if (!listener.getPlayer().hasPlayedBefore())
-            player.chat(config.firstJoin.replaceAll("%player%", listener.getPlayer().getName()));
-        else player.chat(config.joinBack.replaceAll("%player%", listener.getPlayer().getName()));
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            if (!listener.getPlayer().hasPlayedBefore())
+                player.chat(config.firstJoin.replaceAll("%player%", listener.getPlayer().getName()));
+            else player.chat(config.joinBack.replaceAll("%player%", listener.getPlayer().getName()));
+        });
 
         for (String command : config.commandsToExecute) {
             Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), command.replaceAll("%player%", player.getName()));
