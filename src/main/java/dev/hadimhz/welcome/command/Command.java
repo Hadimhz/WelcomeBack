@@ -56,6 +56,10 @@ public class Command implements CommandExecutor {
             Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), command.replaceAll("%player%", player.getName()));
         }
 
+        for (String command : config.CommandsToExecuteOnFirstJoin) {
+            Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), command.replaceAll("%player%", player.getName()));
+        }
+
         return false;
     }
 }
