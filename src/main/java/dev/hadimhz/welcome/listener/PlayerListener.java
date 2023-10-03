@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashSet;
@@ -32,8 +33,11 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        welcomed.clear();
         player = event.getPlayer();
+
+        if (isVanished(player)) return;
+
+        welcomed.clear();
         joinedAt = System.currentTimeMillis();
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -57,4 +61,12 @@ public class PlayerListener implements Listener {
     public Player getPlayer() {
         return player;
     }
+
+    private boolean isVanished(Player player) {
+        for (MetadataValue meta : player.getMetadata("vanished")) {
+            if (meta.asBoolean()) return true;
+        }
+        return false;
+    }
+
 }
