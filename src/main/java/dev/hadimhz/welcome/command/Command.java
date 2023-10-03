@@ -10,6 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Command implements CommandExecutor {
 
     private final Plugin plugin;
@@ -46,11 +49,13 @@ public class Command implements CommandExecutor {
             return false;
         }
 
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            if (!listener.getPlayer().hasPlayedBefore())
-                player.chat(config.firstJoin.replaceAll("%player%", listener.getPlayer().getName()));
-            else player.chat(config.joinBack.replaceAll("%player%", listener.getPlayer().getName()));
-        });
+
+        final Random random = ThreadLocalRandom.current();
+
+        if (!listener.getPlayer().hasPlayedBefore())
+            player.chat(config.firstJoin.get(random.nextInt(config.firstJoin.size())).replaceAll("%player%", listener.getPlayer().getName()));
+        else
+            player.chat(config.joinBack.get(random.nextInt(config.joinBack.size())).replaceAll("%player%", listener.getPlayer().getName()));
 
         for (String command : config.commandsToExecute) {
             Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), command.replaceAll("%player%", player.getName()));
@@ -59,6 +64,8 @@ public class Command implements CommandExecutor {
         for (String command : config.CommandsToExecuteOnFirstJoin) {
             Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), command.replaceAll("%player%", player.getName()));
         }
+
+        listener.getWelcomed().add(player.getUniqueId());
 
         return false;
     }

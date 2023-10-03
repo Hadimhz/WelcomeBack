@@ -15,8 +15,8 @@ public class Config {
 
     public String onPlayerJoin = "&7A player has joined run the command &d/wb &7to welcome them!";
 
-    public String firstJoin = "Welcome %player%! Hope you enjoy your stay";
-    public String joinBack = "Welcome back %player%!";
+    public List<String> firstJoin = ImmutableList.of("Welcome %player%! Hope you enjoy your stay");
+    public List<String> joinBack = ImmutableList.of("Welcome back %player%!");
 
     public List<String> commandsToExecute = ImmutableList.of("eco give %player% 50");
     public List<String> CommandsToExecuteOnFirstJoin = ImmutableList.of("eco give %player% 100");
