@@ -44,7 +44,7 @@ public class PlayerListener implements Listener {
 
             if (onlinePlayer.getUniqueId().equals(event.getPlayer().getUniqueId())) continue;
 
-            onlinePlayer.sendMessage(Chat.translate(config.onPlayerJoin));
+            onlinePlayer.sendMessage(Chat.translate(config.onPlayerJoin.replaceAll("%player%", player.getName())));
 
         }
 
