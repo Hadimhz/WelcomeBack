@@ -40,6 +40,8 @@ public class PlayerListener implements Listener {
         welcomed.clear();
         joinedAt = System.currentTimeMillis();
 
+        if (config.onPlayerJoin.isEmpty()) return;
+
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
 
             if (onlinePlayer.getUniqueId().equals(event.getPlayer().getUniqueId())) continue;
