@@ -53,14 +53,16 @@ public class Command implements CommandExecutor {
         final Random random = ThreadLocalRandom.current();
 
         if (!listener.getPlayer().hasPlayedBefore()) {
-            player.chat(config.firstJoin.get(random.nextInt(config.firstJoin.size())).replaceAll("%player%", listener.getPlayer().getName()));
+            if (config.displayFirstXWelcomeMessages == -1 || listener.getWelcomed().size() < config.displayFirstXWelcomeMessages)
+                player.chat(config.firstJoin.get(random.nextInt(config.firstJoin.size())).replaceAll("%player%", listener.getPlayer().getName()));
 
             for (String command : config.CommandsToExecuteOnFirstJoin) {
                 Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), command.replaceAll("%player%", player.getName()));
             }
 
         } else {
-            player.chat(config.joinBack.get(random.nextInt(config.joinBack.size())).replaceAll("%player%", listener.getPlayer().getName()));
+            if (config.displayFirstXWelcomeMessages == -1 || listener.getWelcomed().size() < config.displayFirstXWelcomeMessages)
+                player.chat(config.joinBack.get(random.nextInt(config.joinBack.size())).replaceAll("%player%", listener.getPlayer().getName()));
 
             for (String command : config.commandsToExecute) {
                 Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), command.replaceAll("%player%", player.getName()));

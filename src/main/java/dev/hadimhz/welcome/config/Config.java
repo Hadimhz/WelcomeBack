@@ -15,6 +15,8 @@ public class Config {
 
     public String onPlayerJoin = "&7A player has joined run the command &d/wb &7to welcome them!";
 
+    public int displayFirstXWelcomeMessages = -1;
+
     public List<String> firstJoin = ImmutableList.of("Welcome %player%! Hope you enjoy your stay");
     public List<String> joinBack = ImmutableList.of("Welcome back %player%!");
 
