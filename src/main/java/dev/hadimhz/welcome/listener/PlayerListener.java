@@ -33,9 +33,9 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        player = event.getPlayer();
-
         if (isVanished(player)) return;
+
+        player = event.getPlayer();
 
         welcomed.clear();
         joinedAt = System.currentTimeMillis();
