@@ -33,7 +33,8 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if (isVanished(player)) return;
+
+        if (isVanished(event.getPlayer())) return;
 
         player = event.getPlayer();
 
