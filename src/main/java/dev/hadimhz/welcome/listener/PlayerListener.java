@@ -27,7 +27,6 @@ public class PlayerListener implements Listener {
         this.config = config;
 
         this.welcomed = new HashSet<>();
-        lastJoined = new HashMap<>();
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
