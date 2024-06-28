@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -26,6 +27,7 @@ public class PlayerListener implements Listener {
         this.config = config;
 
         this.welcomed = new HashSet<>();
+        lastJoined = new HashMap<>();
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
@@ -34,12 +36,14 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
 
-        if (isVanished(event.getPlayer())) return;
+        if (isVanished(event.getPlayer()) || (config.onlyWelcomeAfterXDelay != -1 && ((System.currentTimeMillis() - player.getLastSeen()) / 1000) < config.onlyWelcomeAfterXDelay))
+            return;
 
         player = event.getPlayer();
 
         welcomed.clear();
         joinedAt = System.currentTimeMillis();
+
 
         if (config.onPlayerJoin.isEmpty()) return;
 
